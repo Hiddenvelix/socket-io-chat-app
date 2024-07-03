@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    padding-bottom: 3rem;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+}
+
+#form {
+    margin: 50px 0 0 0;
+    padding: 0.25rem;
+
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+
+    height: 3rem;
+
+    box-sizing: border-box;
+
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.15);
+}
+
+#input {
+    border: none;
+    padding: 0 1rem;
+    flex-grow: 1;
+    border-radius: 2rem;
+    margin: 0.25rem;
+}
+
+#input:focus {
+    outline: none;
+}
+
+#form > button {
+    background: #333;
+    border: none;
+    padding: 0 1rem;
+    margin: 0.25rem;
+    border-radius: 3px;
+    outline: none;
+    color: #fff;
+}
+
+#messages {
+    max-width: 100%;
+    width: 100%;
+
+    list-style-type: none;
+    margin: 20px 0 50px 0;
+    padding: 0;
+}
+
+#messages > li {
+    margin: 10px 20px;
+}
+
+#messages li .content {
+    width: 100%;
+}
+
+#messages li.msgReceived {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#messages li.msgReceived .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    max-width: 400px;
+    width: max-content;
+    min-width: 200px;
+
+    word-break: break-all;
+
+    padding: 5px;
+
+    background-color: #72d7ff;
+    border-bottom: 1px solid rgba(49, 49, 49, 0.151);
+
+    border-radius: 5px 20px 20px 5px;
+}
+
+
+#messages li.msgSystem .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    word-break: break-all;
+
+    padding: 5px;
+
+    background-color: #d8d8d8;
+    border-bottom: 1px solid rgba(49, 49, 49, 0.151);
+
+    border-radius: 20px;
+
+}
+
+#messages li.msgSent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#messages li.msgSent .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    max-width: 400px;
+    width: max-content;
+    min-width: 200px;
+
+    word-break: break-all;
+
+    padding: 5px;
+
+    background-color: rgb(100, 255, 94);
+    border-bottom: 1px solid rgba(49, 49, 49, 0.151);
+
+    border-radius: 20px 5px 5px 20px;
+
+    text-align: right;
+
+}
+
+#messages .msgUser {
+    padding: 0 10px 5px;
+
+    font-size: 0.8rem;
+}
+
+#messages .msgContent {
+    padding: 0 10px;
+}
+
+#messages .msgTimestamp {
+    width: 95%;
+
+    font-family: monospace;
+    font-size: 0.6rem;
+}
+
+#messages .msgReceived .msgTimestamp {
+    text-align: right;
+}
+
+#messages .msgSent .msgTimestamp {
+    text-align: left;
+}

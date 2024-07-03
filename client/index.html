@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const form = document.getElementById('form');
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
+    var name = "User"
+
+    const createMessage = (data) => {
+        var item;
+
+        switch (data["type"]) {
+            case "msg":
+                item = `<li class='msgReceived'><div class="content"><span class='msgUser'>${data["user"]}</span><span class='msgContent'>${data["msg"]}</span><span class='msgTimestamp'>${createTimestamp()}</span></div></li>`
+                break;
+            case "emit":
+                item = `<li class='msgSent'><div class="content"><span class='msgUser'>${data["user"]}</span><span class='msgContent'>${data["msg"]}</span><span class='msgTimestamp'>${createTimestamp()}</span></div></li>`
+                break;
+            case "sys":
+                item = `<li class='msgSystem'><div class="content"><span class='msgContent'>${data["msg"]}</span></div></li>`
+                break;
+            default:
+                item = `<li class='msgReceived'><div class="content"><span class='msgUser'>${data["user"]}</span><span class='msgContent'>${data["msg"]}</span><span class='msgTimestamp'>${createTimestamp()}</span></div></li>`
+                break;
+        }
+
+        messages.innerHTML += item;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    const createTimestamp = () => {
+        d = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        return d;
+    }
+
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+            if (input.value.startsWith("name = ")) {
+                socket.emit('chat message', {"msg":`${name} changed their name to ${input.value.split(" = ")[1]}.`, "type":"sys"});
+                sessionStorage.setItem("name", input.value.split(" = ")[1]);
+                createMessage({"msg":`You changed your name to ${input.value.split(" = ")[1]}.`, "type":"sys"});
+            } else {
+                name = sessionStorage.getItem("name");
+                socket.emit('chat message', {"msg":input.value, "user":name, "type":"msg"});
+                createMessage({"msg":input.value, "user":"You", "type":"emit"});
+            }
+            input.value = '';
+        };
+    });
+
+    socket.on('chat message', (data) => {
+        createMessage(data);
+    });
+
+  </script>
+</html>
