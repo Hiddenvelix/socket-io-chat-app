@@ -11,7 +11,9 @@ app.use(express.static('../client'));
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    io.emit('user connect');
     socket.on('disconnect', () => {
+        io.emit('user disconnect');
         console.log('user disconnect');
     });
 
